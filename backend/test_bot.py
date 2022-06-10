@@ -7,8 +7,8 @@ import os
 if __name__ == '__main__':
     dalle_version = consts.DALLE_MODEL_MINI
     dalle_model = dalle_model.DalleModel(dalle_version)
-    print(f"--> Model selected - DALL-E {dalle_version}. Initializing...")
-    print("--> DALL-E Server is up and running!")
+    print("--> Model selected - DALL-E {}. Initializing...".format(dalle_version))
+    print("--> DALL-E Bot is up and running!")
 
     client = discord.Client()
 
@@ -24,7 +24,7 @@ if __name__ == '__main__':
         if message.content.startswith('$blend') and len(message.content) > 7:
             prompt = message.content[7:]
             await message.channel.send("You queried: \"{}\"".format(prompt))
-            await message.channel.send("But will it blend @everyone?")
+            await message.channel.send("But will it blend?")
             generated_imgs = dalle_model.generate_images(prompt, 1)
 
         for img in generated_imgs:
@@ -32,5 +32,11 @@ if __name__ == '__main__':
             img.save(buffered, format="JPEG")
             with open('output.jpeg', 'wb') as f:
                 f.write(buffered.getbuffer())
+
+        with open('output.jpeg', 'rb') as f:
+            picture = discord.File(f)
+            await message.channel.send("\"{}:\"".format(prompt))
+            await message.channel.send(file=picture)
+
 
     client.run(os.environ['DISCORD_TOKEN'])
