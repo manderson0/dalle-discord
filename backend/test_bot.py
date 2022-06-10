@@ -27,16 +27,16 @@ if __name__ == '__main__':
             await message.channel.send("But will it blend?")
             generated_imgs = dalle_model.generate_images(prompt, 1)
 
-        for img in generated_imgs:
-            buffered = BytesIO()
-            img.save(buffered, format="JPEG")
-            with open('output.jpeg', 'wb') as f:
-                f.write(buffered.getbuffer())
+            for img in generated_imgs:
+                buffered = BytesIO()
+                img.save(buffered, format="JPEG")
+                with open('output.jpeg', 'wb') as f:
+                    f.write(buffered.getbuffer())
 
-        with open('output.jpeg', 'rb') as f:
-            picture = discord.File(f)
-            await message.channel.send("\"{}\":".format(prompt))
-            await message.channel.send(file=picture)
+            with open('output.jpeg', 'rb') as f:
+                picture = discord.File(f)
+                await message.channel.send("\"{}\":".format(prompt))
+                await message.channel.send(file=picture)
 
 
     client.run(os.environ['DISCORD_TOKEN'])
