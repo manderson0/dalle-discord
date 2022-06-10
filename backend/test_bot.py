@@ -35,7 +35,7 @@ if __name__ == '__main__':
 
         with open('output.jpeg', 'rb') as f:
             picture = discord.File(f)
-            await message.channel.send("\"{}:\"".format(prompt))
+            await message.channel.send("\"{}\":".format(prompt))
             await message.channel.send(file=picture)
 
 
